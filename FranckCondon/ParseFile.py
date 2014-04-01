@@ -27,6 +27,10 @@ def parseFile(filename):
 def parseNormalCoordinates(filename):
     """ read a file in the form InputFiles/ccl2_gs_mbpt_freq.normco.new
     """
+
+    # Minimum frequency to be considered a vibrational mode
+    freqThreshold = 20
+    
     f = open(filename)
     splitLines = [l.split() for l in f]
     currLine = 1 # First line is a comment
@@ -46,7 +50,7 @@ def parseNormalCoordinates(filename):
             except ValueError:
                 freq = 0
             currLine += 2 # Skip comment
-            if freq > 20:
+            if freq > freqThreshold:
                 listOfCoords = []
                 for a in range(nAtoms):
                     print "atom", a
@@ -56,7 +60,7 @@ def parseNormalCoordinates(filename):
             else:
                 currLine += nAtoms # If freq is too low, skip mode
         
-    print freqCoords
-parseNormalCoordinates("InputFiles/ccl2_gs_mbpt_freq.normco.new")
+    return freqCoords
+#parseNormalCoordinates("InputFiles/ccl2_gs_mbpt_freq.normco.new")
 
     
