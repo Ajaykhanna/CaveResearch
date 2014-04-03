@@ -13,10 +13,18 @@ def diffFreqOverlap(Ln, Lm, deltaQ):
         deltaQ is the change in normal coordinate (in bohr)
         Ln[1] must be less than Lm[1]
     """
+
+    # If the excited state frequency (Ln[1]) is greater than the ground state
+    # frequency (Lm[1]) then we must swap Ln and Lm for the program, but then
+    # take the absolute value of the result.
+    if (Ln[1] > Lm[1]):
+        Ln, Lm = Lm, Ln
+    
     n = Ln[0]
     m = Lm[0]
     wn_wavenumbers = Ln[1]
     wm_wavenumbers = Lm[1]
+    
     wn = wn_wavenumbers/8065.5/27.2116
     wm = wm_wavenumbers/8065.5/27.2116
     f = wn/wm
@@ -47,7 +55,7 @@ def diffFreqOverlap(Ln, Lm, deltaQ):
                * G(f*math.sqrt(2*X/(1-f**2)))
                )
     answer = P0*P1*P2*P3*P4
-    return answer
+    return abs( answer)
 
 def genIntensities( deltaE, deltaQ, w_wavenumbers, wprime_wavenumbers):
     """ wprime must be greater than w"""

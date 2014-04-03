@@ -96,25 +96,25 @@ m11 = M.Mode(560, 450, 2)
 # m2 = M.Mode(500.1, 300, 0.1)
 # m3 = M.Mode(5000.01, 5000, 0.1)
 
-Modes = [mtest] #[m1, m2, m3, m10, m5]#, m6 ]#, m7, m8, m9, m10, m11]
-E_electronic = 0.005
-(energies, intensities, numpoints)  = genMultiModePoints(threshold, Modes, E_electronic, 11)
+# Modes = [mtest] #[m1, m2, m3, m10, m5]#, m6 ]#, m7, m8, m9, m10, m11]
+# E_electronic = 0.005
+# (energies, intensities, numpoints)  = genMultiModePoints(threshold, Modes, E_electronic, 11)
 
-print "E len", len(energies), "I len", len(intensities)
+# print "E len", len(energies), "I len", len(intensities)
 
-wide = [0.01]*numpoints
-med = [0.005]*numpoints
-skinny = [0.001]*numpoints
+# wide = [0.01]*numpoints
+# med = [0.005]*numpoints
+# skinny = [0.001]*numpoints
 
-energies.reverse()
-intensities.reverse()
+# energies.reverse()
+# intensities.reverse()
 
-#get the gaussians
-#points = Plots.genSpectrum(energies, intensities, skinny)
+# #get the gaussians
+# #points = Plots.genSpectrum(energies, intensities, skinny)
 
-points = [energies, intensities]
-# for x in range(len(energies)):
-#     print "E: ", energies[x], " I: ", intensities[x]x
-#Plots.plotSpectrum(points[0], points[1], "N Modes")
-Plots.plotSticks(points[0], points[1], "N Modes")
-raw_input("Press ENTER to exit ")
+# points = [energies, intensities]
+# # for x in range(len(energies)):
+# #     print "E: ", energies[x], " I: ", intensities[x]x
+# #Plots.plotSpectrum(points[0], points[1], "N Modes")
+# Plots.plotSticks(points[0], points[1], "N Modes")
+# raw_input("Press ENTER to exit ")

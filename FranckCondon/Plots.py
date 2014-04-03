@@ -40,7 +40,7 @@ def plotSticks(xpoints, ypoints, title):
     ax.set_title(title)
     ax.set_xlabel("Energies")
     ax.set_ylabel("Intensities")
-    ax.bar(xpoints, ypoints, 0.0001) # last input is bar width
+    ax.bar(xpoints, ypoints, 0.0003) # last input is bar width
     #plt.ylim([0, max(ypoints)])
     plt.draw()
     plt.show()
