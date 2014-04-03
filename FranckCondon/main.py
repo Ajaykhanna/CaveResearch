@@ -1,5 +1,8 @@
-import DiffFreqs as DF
-import SimpleOscillator as SO
+import ParseFile as pf
+import Dushinsky as d
 
-print "SO, <1|0>", SO.overlap(1, 0)
-print "DF, <1|0>", DF.diffFreqOverlap([1, 450], [0, 550])
+(gsEq, gsFreqCoords) = pf.parseNormalCoordinates("InputFiles/ccl2_gs_mbpt_freq.normco.new")
+(exEq, exFreqCoords) = pf.parseNormalCoordinates("InputFiles/ccl2_cation_mbpt_freq.normco.new")
+
+dQ = d.calcDQ(gsEq, gsFreqCoords, exEq, exFreqCoords)
+print dQ

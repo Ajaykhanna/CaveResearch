@@ -1,28 +1,28 @@
 import Mode
 
-def parseFile(filename):
-    """ reads a file in the form of sampleInput.txt
-        returns a tuple (threshold, E_electronic, numModes, listOfModes)
-    """
-    f = open(filename)
-    input =  [l.split() for l in f]
-    thresh = float(input[0][0])
-    E_el = float(input[1][0])
-    numModes = int(input[3][0]) # Skipped a blank line in the file
-    currLine = 5
-    modes = []
-    for n in range(numModes):
-        if (currLine +2) < len(input):
-            print "currLine = ", currLine
-            gsFreq = float(input[currLine][0])
-            exFreq = float(input[currLine+1][0])
-            dQ = float(input[currLine+2][0])
-            currLine += 4 # Blank line between modes
-            mode = Mode.Mode(gsFreq, exFreq, dQ)
-            modes += [mode]
-        else:
-            raise EOFError("Incomplete mode on line " + str(currLine))
-    return (thresh, E_el, numModes, modes)
+# def parseFile(filename):
+#     """ reads a file in the form of sampleInput.txt
+#         returns a tuple (threshold, E_electronic, numModes, listOfModes)
+#     """
+#     f = open(filename)
+#     input =  [l.split() for l in f]
+#     thresh = float(input[0][0])
+#     E_el = float(input[1][0])
+#     numModes = int(input[3][0]) # Skipped a blank line in the file
+#     currLine = 5
+#     modes = []
+#     for n in range(numModes):
+#         if (currLine +2) < len(input):
+#             print "currLine = ", currLine
+#             gsFreq = float(input[currLine][0])
+#             exFreq = float(input[currLine+1][0])
+#             dQ = float(input[currLine+2][0])
+#             currLine += 4 # Blank line between modes
+#             mode = Mode.Mode(gsFreq, exFreq, dQ)
+#             modes += [mode]
+#         else:
+#             raise EOFError("Incomplete mode on line " + str(currLine))
+#     return (thresh, E_el, numModes, modes)
 
 def parseNormalCoordinates(filename):
     """ read a file in the form InputFiles/ccl2_gs_mbpt_freq.normco.new
@@ -37,12 +37,14 @@ def parseNormalCoordinates(filename):
     totLines = len(splitLines)
     nAtoms = 0  # number of atoms
     freqCoords = []
+    eqCoords = []
     # Figure out number of atoms from "mass weighted coordinates" section
     while splitLines[currLine][0] != "%": # Keep going until "% frequency"
+        eqCoords += splitLines[currLine]
         nAtoms += 1
         currLine += 1
     while currLine < totLines:
-        print "currline",  currLine
+        #print "currline",  currLine
         if splitLines[currLine] == ["%", "frequency"]:
             currLine += 1
             try:
@@ -53,14 +55,12 @@ def parseNormalCoordinates(filename):
             if freq > freqThreshold:
                 listOfCoords = []
                 for a in range(nAtoms):
-                    print "atom", a
+                    #print "atom", a
                     listOfCoords += [float(x) for x in splitLines[currLine]]
                     currLine += 1
                 freqCoords += [(freq, listOfCoords)]
             else:
                 currLine += nAtoms # If freq is too low, skip mode
-        
-    return freqCoords
-#parseNormalCoordinates("InputFiles/ccl2_gs_mbpt_freq.normco.new")
-
-    
+    eqCoords = map(float, eqCoords)
+    return (eqCoords, freqCoords)
+(eq, fcoords) =  parseNormalCoordinates("InputFiles/ccl2_gs_mbpt_freq.normco.new")
