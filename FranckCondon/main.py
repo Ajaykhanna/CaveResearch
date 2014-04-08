@@ -43,10 +43,6 @@ if __name__ == "__main__":
     print freqsAndDQs
     modes = [m.Mode(gsFreq, exFreq, dQ) for (gsFreq, exFreq, dQ) in freqsAndDQs]
 
-    for m in modes:
-        print "Frequency: ", m.groundFreqWN
-        m.computeFranckCondons(range(11), 0)
-        print "FCs", m.FrankCondons
 
     print("Found %d modes" % (len(modes)))
 
@@ -66,11 +62,11 @@ if __name__ == "__main__":
     #print intensities
     
     #get the gaussians
-   # points = p.genSpectrum(energies, intensities, skinny)
+    points = p.genSpectrum(energies, intensities, skinny)
     
-    points = [energies, intensities]
+    #points = [energies, intensities]
     #for x in range(len(energies)):
     #    print "E: ", energies[x], " I: ", intensities[x]
-    #p.plotSpectrum(points[0], points[1], "N Modes")
-    p.plotSticks(points[0], points[1], "%d Modes" % len(modes))
+    p.plotSpectrum(points[0], points[1], "N Modes")
+    #p.plotSticks(points[0], points[1], "%d Modes" % len(modes))
     raw_input("Press ENTER to exit ")

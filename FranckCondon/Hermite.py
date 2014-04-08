@@ -55,4 +55,21 @@ def iHermite(n):
 ##     f = sym.lambdify(x, F)
     return d[n]
 
+# def laguerre(a,n):
+#     """
+#         Generates the nth laguerre polynomial with superscript a
+#         using the Rodrigues formula.
+#     """
+#     d = {}
+#     d[0] = lambda x:
+#     d[1] = lambda x: 
+#     d[2] = lambda x: 
+#     d[3] = lambda x: 
+#     d[4] = lambda x: 
+#     d[5] = lambda x: 
+#     d[6] = lambda x: 
+#     d[7] = lambda x: 
+#     d[8] = lambda x:
+#     d[9] = lambda x: 
+#     d[10] = lambda x: 
 

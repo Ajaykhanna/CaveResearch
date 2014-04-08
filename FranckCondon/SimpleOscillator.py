@@ -1,6 +1,7 @@
 import numpy as np
 import sympy as sym
 import math
+from DiffFreqs import factorial
 
 def laguerre(a, n):
     """
@@ -24,11 +25,15 @@ def sameFreqOverlap(n, m, w_wavenumbers, deltaQ):
     w = w_wavenumbers/8065.5/27.2116
     # F is the (massless) force constant for the mode
     F = w ** 2
+
+    # Convert dQ from amu to multiples of electron mass:
+    convertedQSquared = deltaQ**2/(6.02214*(10**23) * 9.1094*(10**-28))
+    
     # X is defined as such in Siders, Marcus 1981
-    X = (F * (deltaQ**2)) / ( 2 * w)
+    X = (F * (convertedQSquared)) / ( 2 * w)
     
     L = laguerre(n-m, m)
     exp1 = (float(n)-m)/2
     exp2 = -X/float(2)
-    P = ((X**(exp1) * (math.factorial(m)/float(math.factorial(n))))* math.exp(exp2) * L(X))
+    P = ((X**(exp1) * (factorial(m)/float(factorial(n))))* np.exp(exp2) * L(X))
     return P
