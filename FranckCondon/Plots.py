@@ -8,7 +8,7 @@ plt.ion()
 def genSpectrum(energies, intensities, widths):
     """ Gaussianifies the points on the spectrum using the input widths
     """
-    energyRange = np.arange(0, energies[len(energies)-1]*2, energies[0]/100)
+    energyRange = np.arange(0, energies[len(energies)-1]*2, energies[0]/1000)
     intensityRange = [0]*len(energyRange)
 
     # for i in range(len(energies)):

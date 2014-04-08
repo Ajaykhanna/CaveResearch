@@ -32,9 +32,12 @@ def diffFreqOverlap(Ln, Lm, deltaQ):
     
     # F is the (massless) force constant for the mode. But which w?
     F = w ** 2
+
+    convertedQSquared = deltaQ**2/(6.02214*(10**23) * 9.1094*(10**-28))
     
     # X is defined as such in Siders, Marcus 1981 Average frequency?
-    X = (F * deltaQ**2) / ( 2 * w)
+    X = (F * convertedQSquared) / ( 2 * w)
+    print "X is (F * deltaQ**2) / ( 2 * w) = ", X
     
     P0 = (-1)**(m+n) # Should data be alternating plus minus?
     P1 = math.sqrt(2*math.sqrt(f)/(1.0+f))
