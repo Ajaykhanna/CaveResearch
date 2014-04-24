@@ -17,14 +17,14 @@ class Mode:
         self.groundFreq = nu_gs/8065.5/27.2116
         self.excitedFreq = nu_es/8065.5/27.2116
         self.deltaQ = dQ
-        self.groundEnergy = self.groundFreq / 2; # In Atomic units, planck's constant is one
+        self.groundEnergy = self.groundFreqWN / 2; # In Atomic units, planck's constant is one
         self.FrankCondons = []
 
     def excitedEnergy(self, qNumber):
         """ Input is the quantum number of the excited state 
             returns the energy of this state
         """
-        return self.excitedFreq*(qNumber + 0.5)
+        return self.excitedFreqWN*(qNumber + 0.5)
 
 
     def frankCondon(self, qNumber):
@@ -44,9 +44,11 @@ class Mode:
         pastThreshold = False
         for n in ListOfNs:
             if pastThreshold:
+                print"Mode,  n ", n, "past threshold"
                 self.FrankCondons += [0]
             else:
                 FC = self.frankCondon(n)
+                print "Mode  n ", n, "FC = ", FC
                 if FC < threshold:
                     pastThreshold = True
                     self.FrankCondons += [0]

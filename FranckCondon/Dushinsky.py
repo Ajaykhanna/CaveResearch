@@ -23,16 +23,16 @@ def calcDQ(gsEqCoords, gsFreqCoords, exEqCoords, exFreqCoords):
     gsEqCartCoords = np.array(gsEqCoords)
     exEqCartCoords = np.array(exEqCoords)
 
-    print "gsEq", gsEqCartCoords
-    print "exEq", exEqCartCoords
+    #print "gsEq", gsEqCartCoords
+   # print "exEq", exEqCartCoords
 
     gsQCoords = np.array(gsListOfQCoords)
     exQCoords = np.array(exListOfQCoords)
 
     # Change in equilibirum cartesian coordinates 
     changeCartCoords = np.subtract(gsEqCartCoords, exEqCartCoords)
-    print "exQCoords", exQCoords
-    print "change", changeCartCoords
+    #print "exQCoords", exQCoords
+    #print "change", changeCartCoords
 
     # Convert Change to Q-coordinates
     dQArray = np.dot(exQCoords, changeCartCoords)

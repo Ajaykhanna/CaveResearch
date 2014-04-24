@@ -34,9 +34,9 @@ def depthFirstSearch(threshold, Modes, values, E_electronic):
             energy = E_electronic + mode0.excitedEnergy(n) - mode0.groundEnergy
             node = Node(0, mode0.FrankCondons[n], energy)
             fringe.push(node)
-          #  print "Mode 0, n ", n, "FC = ", FC
-        #else:
-          #  print "Mode 0, n ", n, "FC = ", FC, "below threshold"
+            print "Mode 0, n ", n, "FC = ", FC
+        else:
+            print "Mode 0, n ", n, "FC = ", FC, "below threshold"
     while True:
         if fringe.isEmpty():
            break
