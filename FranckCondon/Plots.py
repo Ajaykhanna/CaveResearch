@@ -13,19 +13,23 @@ def genSpectrum(energies, intensities, widths):
     minE = min(energies)
     print "maxE", maxE
     print "minE", minE
-    energyRange = np.arange(minE, maxE/4, (maxE-minE)/1000)
-    
+    energyRange = np.linspace(minE-1000, maxE+1000, 10000)
+
     intensityRange = [0]*len(energyRange)
     print "Number of points to plot:", len(energyRange)
 
     # for i in range(len(energies)):
 #         print "E: ", energies[i], " I: ", intensities[i]
     for i in range(0,len(energies)):
-        gauss = G.gaussianGenerator(intensities[i], widths[i], energies[i])
-        for x in range(len(energyRange)):
-            intensityRange[x] += gauss(energyRange[x])
+       # print "Gaussian for intensity i", intensities[i]
+        if intensities[i]:
+            gauss = G.gaussianGenerator(intensities[i], widths[i], energies[i])
+            for x in range(len(energyRange)):
+                intensityRange[x] += gauss(energyRange[x])
 
     ypoints = [gauss(x) for x in energyRange]
+    #print "Intensities Gaussian"
+   # print sorted(intensityRange, reverse=True)[:60]
     print "Finished Gaussian"
     return (energyRange, intensityRange)
 
@@ -50,7 +54,8 @@ def plotSticks(xpoints, ypoints, title):
     ax.set_ylabel("Intensities")
     ax.bar(xpoints, ypoints, 0.03) # last input is bar width
     print "made graph"
-    #plt.ylim([0, max(ypoints)])
+    plt.ylim([0, max(ypoints)])
+    plt.xlim([0, max(xpoints)])
     plt.draw()
    # print "draw graph"
     plt.show()
@@ -64,6 +69,8 @@ def plotSpectrum(energies, intensities,widths, title):
     ax.set_xlabel("Energies")
     ax.set_ylabel("Intensities")
     p = ax.plot( xpoints, ypoints)
+    
     plt.ylim([0, max(ypoints)])
+    #plt.xlim([0, max(xpoints)])
     plt.draw()
     plt.show()

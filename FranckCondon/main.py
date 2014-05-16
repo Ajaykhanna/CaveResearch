@@ -3,7 +3,8 @@ import Dushinsky as d
 import DiffFreqs as df
 import Mode as m
 import RecursiveModes as r
-import Plots as p
+import ParallelModes as p
+
 import sys
 import getopt
 import optparse
@@ -45,7 +46,7 @@ if __name__ == "__main__":
             " electronic energy : %f,"+
             "threshold : %f") % (gsfile, exfile, E_electronic, threshold) )
     
-    dQ = 2.5
+
     if READ_FILE == 1:
         print "Read File is", READ_FILE
         (gsEq, gsFreqCoords) = pf.parseNormalCoordinates(gsfile)
@@ -53,38 +54,58 @@ if __name__ == "__main__":
         
         freqsAndDQs = d.calcDQ(gsEq, gsFreqCoords, exEq, exFreqCoords)
         print freqsAndDQs
-        modes = [m.Mode(gsFreq, exFreq, dQ) for (gsFreq, exFreq, dQ) in 
+        # CHANGE BAKC TO EXFREQ
+        modes = [m.Mode(gsFreq, gsFreq, dQ) for (gsFreq, exFreq, dQ) in 
                  freqsAndDQs]
-        modes = modes
+        #modes = [modes[2]]
+
 
     else:
         #  modes = [m.Mode(507.64, 507.64,0.374722838/0.5291711), m.Mode(897.05, 897.05, -0.203348073/0.5291711)]
-        modes = [m.Mode(897.05, 897.05, dQ)]
-        E_electronic = 50406.3
+        # modes = [m.Mode(355.53798, 355.53798, 0.232771),
+        # m.Mode(770.120,770.120, 0.237238), m.Mode(793.482, 793.481, 0.0)]
+        modes = [m.Mode(355.5379891821,355.5379891821, 1.70338), m.Mode(770.1203772628,770.1203772628,1.83856 ), m.Mode(793.4813975867, 793.4813975867,0.0) ]
+#        modes = [m.Mode, 2.03397 )]
+        E_electronic = 0
+        #        modes = [modes[2]]
 
     print("Found %d modes" % (len(modes)))
 
-    (energies, intensities, numpoints)  = r.genMultiModePoints(
+    (energies, intensities, numpoints)  = p.genMultiModePoints(
         threshold, modes, E_electronic, 11)
     
     print "E len", len(energies), "I len", len(intensities)
     
-    wide = [0.01]*numpoints
-    med = [0.005]*numpoints
-    skinny = [0.001]*numpoints
+    wide = [100]*numpoints
+    med = [10]*numpoints
+    skinny = [1]*numpoints
     
     energies.reverse()
     intensities.reverse()
     print("Found %d intensities" % len(intensities))
 
     
+    # sorted = sorted(zip(intensities, energies), reverse=True)\
+#     sortedE = sorted(zip(energies, intensities))
 
-   # for x in range(len(energies)):
-   #     print "E: ", energies[x], " I: ", intensities[x]
+#     print "Sorted by Energy"
+#     for x in range(min(len(sortedE), 60)):
+                      
+#         print "E: ", sortedE[x][0], " I: ", sortedE[x][1]
+
+#     sortedI = sorted(zip(intensities, energies), reverse=True)\
+
+#     print
+#     print "Sorted by Intensity"
+#     for x in range(min(len(sortedI), 60)):          
+#         print "E: ", sortedI[x][1], " I: ", sortedI[x][0]
+
+    if graph != "none":
+        import Plots as p
 
     if graph == "stick":
-        p.plotSticks(energies, intensities, gsfile + " -> " + exfile)
+           p.plotSticks(energies, intensities, gsfile + " -> " + exfile)
     elif graph == "curve":
-        p.plotSpectrum(energies, intensities, skinny, gsfile + " -> " + exfile)
-    print "Showing graph"
+        p.plotSpectrum(energies, intensities, wide, gsfile + " -> " + exfile)
+        print "Showing graph"
     raw_input("Press ENTER to exit ")

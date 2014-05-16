@@ -2,8 +2,9 @@ import DiffFreqs as DF
 import Mode as M
 import itertools as it
 import numpy as np
+import pp # Parallel Python
 
-from Stack import Stack
+import Stack
 
 class Node:
     def __init__(self, modeIndex, product, energy):
@@ -23,22 +24,34 @@ def depthFirstSearch(threshold, Modes, values, E_electronic):
 
         Returns a tuple (ListOfEnergies, ListOfIntensities).
     """
-    ListOfIntensites = []
+    ListOfIntensities = []
     ListOfEnergies = []
-    fringe = Stack()
+    jobserver = pp.Server()
     mode0 = Modes[0]
+    jobs = [0]*len(values) # will store jobs
     print "NumModes =", len(Modes)
     for n in values:
         FC = mode0.FrankCondons[n]
         if FC >= threshold:
             energy = E_electronic + mode0.excitedEnergy(n) - mode0.groundEnergy
             node = Node(0, mode0.FrankCondons[n], energy)
-            fringe.push(node)
-            print "Mode 0, n ", n, "FC = ", FC
-        else:
-            print "Mode 0, n ", n, "FC = ", FC, "below threshold"
+            jobs[n] = jobserver.submit(oneThread,
+                                       (node, threshold, Modes, values, E_electronic),
+                                       )
+    results = [f() for f in jobs]        
+    map(ListOfEnergies.append, [es for (es, ins) in results])
+    map(ListOfIntensities.append, [ins for (es, ins) in results])
+    return (ListOfEnergies, ListOfIntensities)
+    
+def oneThread(initNode, threshold, Modes, values, E_electronic):
+    print "Calculating N", initNode.energy
+    fringe = []
+    fringe.append(initNode)
+    intensities = []
+    energies = []
+    
     while True:
-        if fringe.isEmpty():
+        if fringe == []:
            break
         node = fringe.pop()
         if (node.modeIndex+1) < len(Modes):
@@ -52,13 +65,12 @@ def depthFirstSearch(threshold, Modes, values, E_electronic):
                     newNode = Node(node.modeIndex+1,
                                    nextMode.FrankCondons[n]*node.product,
                                    node.energy+energy)
-                    fringe.push(newNode)
-        else:
-            
-            ListOfIntensites += [node.product**2]
-            ListOfEnergies += [node.energy]
+                    fringe.append(newNode)
+        else:          
+            intensities += [node.product**2]
+            energies += [node.energy]
 
-    return (ListOfEnergies, ListOfIntensites)
+    return (energies, intensities)
 
 
 

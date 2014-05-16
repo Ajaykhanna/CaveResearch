@@ -38,11 +38,12 @@ def sameFreqOverlap(n, m, w_wavenumbers, deltaQ):
 #    convertedQSquared = deltaQ**2
     # X is defined as such in Siders, Marcus 1981
     X = (F * (convertedQSquared)) / ( 2 * w)
-    
+    #print "X is", X
     L = laguerre(n-m, m)
     #L = lambda x : x
     exp1 = (float(n)-m)/2
     exp2 = -X/float(2)
-    P = ((X**(exp1) * (factorial(m)/float(factorial(n))))* np.exp(exp2) *
+    #print "L(X)", L(X)
+    P = (X**(exp1) * (factorial(m)/float(factorial(n)))**0.5 * np.exp(exp2) *
          L(X))
     return P

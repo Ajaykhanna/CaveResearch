@@ -35,7 +35,8 @@ def calcDQ(gsEqCoords, gsFreqCoords, exEqCoords, exFreqCoords):
     #print "change", changeCartCoords
 
     # Convert Change to Q-coordinates
-    dQArray = np.dot(exQCoords, changeCartCoords)
+    #dQArray = np.dot(exQCoords, changeCartCoords)
+    dQArray = np.dot(gsQCoords, changeCartCoords)
     dQList = list(dQArray)
 
     # Get frequencies
