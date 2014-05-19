@@ -62,16 +62,16 @@ if __name__ == "__main__":
 
     else:
         #  modes = [m.Mode(507.64, 507.64,0.374722838/0.5291711), m.Mode(897.05, 897.05, -0.203348073/0.5291711)]
-        # modes = [m.Mode(355.53798, 355.53798, 0.232771),
+        modes = [m.Mode(355.53798, 371.2870855649, 2.92714)]
         # m.Mode(770.120,770.120, 0.237238), m.Mode(793.482, 793.481, 0.0)]
-        modes = [m.Mode(355.5379891821,355.5379891821, 1.70338), m.Mode(770.1203772628,770.1203772628,1.83856 ), m.Mode(793.4813975867, 793.4813975867,0.0) ]
-#        modes = [m.Mode, 2.03397 )]
+        #modes = [m.Mode(355.5379891821,355.5379891821, 1.70338), m.Mode(770.1203772628,770.1203772628,1.83856 ), m.Mode(793.4813975867, 793.4813975867,0.0) ]
+        #        modes = [m.Mode, 2.03397 )]
         E_electronic = 0
         #        modes = [modes[2]]
 
     print("Found %d modes" % (len(modes)))
 
-    (energies, intensities, numpoints)  = p.genMultiModePoints(
+    (energies, intensities, numpoints)  = r.genMultiModePoints(
         threshold, modes, E_electronic, 11)
     
     print "E len", len(energies), "I len", len(intensities)
@@ -83,6 +83,8 @@ if __name__ == "__main__":
     energies.reverse()
     intensities.reverse()
     print("Found %d intensities" % len(intensities))
+    for i in intensities:
+        print i
 
     
     # sorted = sorted(zip(intensities, energies), reverse=True)\
