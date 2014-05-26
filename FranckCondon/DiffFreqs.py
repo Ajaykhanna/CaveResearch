@@ -34,6 +34,7 @@ def diffFreqOverlap(Ln, Lm, deltaQ):
 
     #convertedQSquared = deltaQ**2/(6.02214*(10**23) * 9.1094*(10**-28))
     convertedQSquared = deltaQ**2
+
     
     # X is defined as such in Siders, Marcus 1981 Average frequency?
     X = convertedQSquared / 2

@@ -61,6 +61,7 @@ if __name__ == "__main__":
 
 
     else:
+##### Change the variables below to run the code with a different set of modes. A mode is created by typing m.Mode(wi, wf, dQ) #####
         #  modes = [m.Mode(507.64, 507.64,0.374722838/0.5291711), m.Mode(897.05, 897.05, -0.203348073/0.5291711)]
         modes = [m.Mode(355.53798, 371.2870855649, 2.92714)]
         # m.Mode(770.120,770.120, 0.237238), m.Mode(793.482, 793.481, 0.0)]
